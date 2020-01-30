@@ -9,6 +9,7 @@ Thread control with wait/notify. Producer/consumer
 1. Check the operation of the program and run it. While this occurs, run jVisualVM and check the CPU consumption of the corresponding process. Why is this consumption? Which is the responsible class? 
   - The CPU consuption is beacuse the consumer is always asking if the queue is empty , the most of the times the answer is false , and       this question can be made a lot of times.  
   - The responsible class is "StartProduction" which is the one who controlls the producer and the consumer.
+  ![Pic1](https://user-images.githubusercontent.com/43153078/73459427-d8103780-4344-11ea-96ee-e8fe31a25bfc.png) 
   
 
   
