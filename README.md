@@ -7,7 +7,7 @@ The purpose of this laboratory is for the student to know and apply concepts of 
 Thread control with wait/notify. Producer/consumer
 
 1. Check the operation of the program and run it. While this occurs, run jVisualVM and check the CPU consumption of the corresponding process. Why is this consumption? Which is the responsible class? 
-  - The CPU consuption is beacuse the consumer is always asking if the queue is empty , the most of the times the answer is false , and       this question can be made a lot of times.  
+  - The CPU consumption is beacuse the consumer is always asking if the queue is empty , the most of the times the answer is false , and       this question can be made a lot of times.  
   - The responsible class is "StartProduction" which is the one who controlls the producer and the consumer.
   ![Pic1](https://user-images.githubusercontent.com/43153078/73459427-d8103780-4344-11ea-96ee-e8fe31a25bfc.png) 
   ![pic2](https://user-images.githubusercontent.com/43153078/73459588-232a4a80-4345-11ea-8643-92bea20d2a0c.png)
@@ -15,6 +15,8 @@ Thread control with wait/notify. Producer/consumer
   
 
 2. Make the necessary adjustments so that the solution uses the CPU more efficiently, taking into account that - for now - production is slow and consumption is fast. Verify with JVisualVM that the CPU consumption is reduced. 
+
+To reduce the  CPU consumption we implement a wait() and notify()
 
 ![image](https://user-images.githubusercontent.com/43153078/73499826-2813ec00-438f-11ea-8f17-ccff805662a0.png)
 
