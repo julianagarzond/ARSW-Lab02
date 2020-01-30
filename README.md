@@ -14,11 +14,31 @@ Thread control with wait/notify. Producer/consumer
 
   
 
-  
-  
-  
-
 2. Make the necessary adjustments so that the solution uses the CPU more efficiently, taking into account that - for now - production is slow and consumption is fast. Verify with JVisualVM that the CPU consumption is reduced. 
+
+![image](https://user-images.githubusercontent.com/43153078/73499826-2813ec00-438f-11ea-8f17-ccff805662a0.png)
+
+``` java
+public void optimized() {
+        while (true) {
+
+            dataSeed = dataSeed + rand.nextInt(100);
+            System.out.println("Producer added " + dataSeed);
+            queue.add(dataSeed);
+
+            synchronized (queue) {
+                queue.notify();
+            }
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+``` 
 
 3. Make the producer now produce very fast, and the consumer consumes slow. Taking into account that the producer knows a Stock limit (how many elements he should have, at most in the queue), make that limit be respected. Review the API of the collection used as a queue to see how to ensure that this limit is not exceeded. Verify that, by setting a small limit for the 'stock', there is no high CPU consumption or errors.
 
