@@ -29,18 +29,65 @@ public class Producer extends Thread {
 
     @Override
     public void run() {
+        //original();
+        //optimized();
+        lowConsumption();
+    }
+
+    public void original() {
         while (true) {
+
             dataSeed = dataSeed + rand.nextInt(100);
             System.out.println("Producer added " + dataSeed);
             queue.add(dataSeed);
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+
+    public void optimized() {
+        while (true) {
+
+            dataSeed = dataSeed + rand.nextInt(100);
+            System.out.println("Producer added " + dataSeed);
+            queue.add(dataSeed);
+
             synchronized (queue) {
                 queue.notify();
             }
+
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    public void lowConsumption() {
+
+        while (true) {
+
+            synchronized (queue) {
+                if (queue.size() > 40) {
+                    try {
+                        queue.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            dataSeed = dataSeed + rand.nextInt(100);
+            System.out.println("Producer added " + dataSeed);
+            queue.add(dataSeed);
+
+        }
+
     }
 }
