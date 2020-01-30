@@ -10,6 +10,8 @@ Thread control with wait/notify. Producer/consumer
   - The CPU consuption is beacuse the consumer is always asking if the queue is empty , the most of the times the answer is false , and       this question can be made a lot of times.  
   - The responsible class is "StartProduction" which is the one who controlls the producer and the consumer.
   
+
+  
   
   
 
