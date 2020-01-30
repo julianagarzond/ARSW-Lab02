@@ -42,3 +42,50 @@ public void optimized() {
 
 3. Make the producer now produce very fast, and the consumer consumes slow. Taking into account that the producer knows a Stock limit (how many elements he should have, at most in the queue), make that limit be respected. Review the API of the collection used as a queue to see how to ensure that this limit is not exceeded. Verify that, by setting a small limit for the 'stock', there is no high CPU consumption or errors.
 
+``` java
+
+ public void lowConsumption() {
+
+        while (true) {
+
+            synchronized (queue) {
+                if (queue.size() > 40) {
+                    try {
+                        queue.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            dataSeed = dataSeed + rand.nextInt(100);
+            System.out.println("Producer added " + dataSeed);
+            queue.add(dataSeed);
+
+        }
+
+    }
+
+```
+``` java
+ public void lowConsumption(){
+        while (true) {
+            if (queue.size() > 0) {
+                int elem = queue.poll();
+                System.out.println("Consumer consumes " + elem);
+                synchronized (queue){
+                    queue.notify();
+                }
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+    }
+
+```
+
