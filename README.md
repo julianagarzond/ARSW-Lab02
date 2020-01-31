@@ -16,7 +16,7 @@ Thread control with wait/notify. Producer/consumer
 
 2. Make the necessary adjustments so that the solution uses the CPU more efficiently, taking into account that - for now - production is slow and consumption is fast. Verify with JVisualVM that the CPU consumption is reduced. 
 
-To reduce the  CPU consumption we implement a wait() and notify()
+To reduce the  CPU consumption we implement a wait() and notify() , In the producer class we sysnchronized the queue becaese is the resource that are sharing both threads, when the producer add something to the queue it notify that there´s something to consume ,
 
 ![image](https://user-images.githubusercontent.com/43153078/73499826-2813ec00-438f-11ea-8f17-ccff805662a0.png)
 
