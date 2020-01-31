@@ -16,7 +16,7 @@ Thread control with wait/notify. Producer/consumer
 
 2. Make the necessary adjustments so that the solution uses the CPU more efficiently, taking into account that - for now - production is slow and consumption is fast. Verify with JVisualVM that the CPU consumption is reduced. 
 
-To reduce the  CPU consumption we implement a wait() and notify() , In the producer class we sysnchronized the queue becaese is the resource that are sharing both threads, when the producer add something to the queue it notify that there´s something to consume ,
+To reduce the  CPU consumption we implement a wait() and notify() , In the producer class we sysnchronized the queue becaese is the resource that are sharing both threads, when the producer add something to the queue it notify that there´s something to consume , also the consumer is waitng for the producer to notify and when the queue size is different to 0 it starts to consumes
 
 ![image](https://user-images.githubusercontent.com/43153078/73499826-2813ec00-438f-11ea-8f17-ccff805662a0.png)
 
@@ -41,8 +41,31 @@ public void optimized() {
     }
 
 ``` 
+``` java
+ public void optimized(){
+        while (true) {
+
+            synchronized (queue) {
+
+                try {
+                    queue.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (queue.size() > 0) {
+                    int elem = queue.poll();
+                    System.out.println("Consumer consumes " + elem);
+                }
+            }
+        }
+    }
+    
+  ``` 
 
 3. Make the producer now produce very fast, and the consumer consumes slow. Taking into account that the producer knows a Stock limit (how many elements he should have, at most in the queue), make that limit be respected. Review the API of the collection used as a queue to see how to ensure that this limit is not exceeded. Verify that, by setting a small limit for the 'stock', there is no high CPU consumption or errors.
+
+
 
 ``` java
 
