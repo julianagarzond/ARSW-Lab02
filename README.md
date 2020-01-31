@@ -1,5 +1,9 @@
 # ARSW-Lab02
 
+## Members
+  - Juliana Garzón Duque
+  - Eduardo Ocampo Arellano 
+
 ## Immortal Case
 The purpose of this laboratory is for the student to know and apply concepts of concurrent programming, as well as strategies that avoid career conditions
 
