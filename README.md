@@ -127,7 +127,10 @@ Synchronization and Dead-Locks.
  - The game could never have a single winner. Most likely, in the end there are only two left, fighting indefinitely by removing and        adding life points. 
 2. Review the code and identify how the functionality indicated above was implemented. Given the intention of the game, an invariant       should be that the sum of the life points of all players is always the same (of course, in an instant of time in which a time increase   reduction operation is not in process ). For this case, for N players, what should this value be?
   
-  Each player has 100 points of health , so if there are N players the result will be NX100
+    Each player has 100 points of health , so if there are N players the result will be NX100
+    
+    ![vidas](https://user-images.githubusercontent.com/43153078/73597584-6dedc300-44fb-11ea-9534-392c9c46fa0d.PNG) 
+  
   
   
   
