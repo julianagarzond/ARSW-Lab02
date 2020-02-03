@@ -3,6 +3,12 @@
 ## Members
   - Juliana Garzón Duque
   - Eduardo Ocampo Arellano 
+  
+## Compile
+  - mvn pacakage
+  
+## Run
+  - mvn compile0
 
 ## Immortal Case
 The purpose of this laboratory is for the student to know and apply concepts of concurrent programming, as well as strategies that avoid career conditions
@@ -150,6 +156,8 @@ Synchronization and Dead-Locks.
     The fight is the most important critical region, becuase all threads access to the variable that is the health of every mortal.
    
 7. After implementing your strategy, start running your program, and pay attention to whether it comes to a halt. If so, use the jps and    jstack programs to identify why the program stopped.
+
+After running the problem there is not any halt.
 
 8. Consider a strategy to correct the problem identified above (you can review Chapter 15 of Java Concurrency in Practice again).
 
