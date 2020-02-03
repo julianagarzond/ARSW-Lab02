@@ -135,15 +135,31 @@ Synchronization and Dead-Locks.
   
   
   
-3. Run the application and verify how the ‘pause and check’ option works. Is the invariant fulfilled?
-   A first hypothesis that the race condition for this function (pause and check) is presented is that the program consults the list        whose values ​​it will print, while other threads modify their values. To correct this, do whatever is necessary so that, before        printing the current results, all other threads are paused. Additionally, implement the ‘resume’ option.
-4. Check the operation again (click the button many times). Is the invariant fulfilled or not ?.
-   Identify possible critical regions in regards to the fight of the immortals. Implement a blocking strategy that avoids race              conditions. Remember that if you need to use two or more ‘locks’ simultaneously, you can use nested synchronized blocks:
-5. After implementing your strategy, start running your program, and pay attention to whether it comes to a halt. If so, use the jps and    jstack programs to identify why the program stopped.
-6. Consider a strategy to correct the problem identified above (you can review Chapter 15 of Java Concurrency in Practice again).
-7. Once the problem is corrected, rectify that the program continues to function consistently when 100, 1000 or 10000 immortals are        executed. If in these large cases the invariant begins to be breached again, you must analyze what was done in step 4.
-8. An annoying element for the simulation is that at a certain point in it there are few living 'immortals' making failed fights with     'immortals' already dead. It is necessary to suppress the immortal dead of the simulation as they die. 
-9. Analyzing the simulation operation scheme, could this create a race condition? Implement the functionality, run the simulation and      see what problem arises when there are many 'immortals' in it. Write your conclusions about it in the file ANSWERS.txt. 
-10. Correct the previous problem WITHOUT using synchronization, since making access to the shared list of immortals sequential would make simulation extremely slow. 
-11. To finish, implement the STOP option.
+3. Run the application and verify how the ‘pause and check’ option works. Is the invariant fulfilled.?
+    The invariant is not fullfilled, probably all the thread are changing the same memory state that is the health of the inmortals.
+    
+4. A first hypothesis that the race condition for this function (pause and check) is presented is that the program consults the list        whose values ​​it will print, while other threads modify their values. To correct this, do whatever is necessary so that, before        printing the current results, all other threads are paused. Additionally, implement the ‘resume’ option.
+    For the "pause and check" option we synchronized the "Inmortal population" List
+   
+    
+5. Check the operation again (click the button many times). Is the invariant fulfilled or not ?.
+    The invariant is fulfilled, everytime we click the button the value is 300 with N=0.
+    
+6. Identify possible critical regions in regards to the fight of the immortals. Implement a blocking strategy that avoids race              conditions. Remember that if you need to use two or more ‘locks’ simultaneously, you can use nested synchronized blocks:
+    
+    The fight is the most important critical region, becuase all threads access to the variable that is the health of every mortal.
+   
+7. After implementing your strategy, start running your program, and pay attention to whether it comes to a halt. If so, use the jps and    jstack programs to identify why the program stopped.
+
+8. Consider a strategy to correct the problem identified above (you can review Chapter 15 of Java Concurrency in Practice again).
+
+9. Once the problem is corrected, rectify that the program continues to function consistently when 100, 1000 or 10000 immortals are        executed. If in these large cases the invariant begins to be breached again, you must analyze what was done in step 4.
+
+10. An annoying element for the simulation is that at a certain point in it there are few living 'immortals' making failed fights with     'immortals' already dead. It is necessary to suppress the immortal dead of the simulation as they die.
+
+  10.1 Analyzing the simulation operation scheme, could this create a race condition? Implement the functionality, run the simulation          and see what problem arises when there are many 'immortals' in it. Write your conclusions about it in the file ANSWERS.txt.
+
+  10.2 Correct the previous problem WITHOUT using synchronization, since making access to the shared list of immortals sequential would       .make simulation extremely slow.
+
+13. To finish, implement the STOP option.
 
