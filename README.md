@@ -150,7 +150,7 @@ Synchronization and Dead-Locks.
     
 5. Check the operation again (click the button many times). Is the invariant fulfilled or not ?.
     The invariant is fulfilled, everytime we click the button the value is 300 with N=0.
-    
+    ![Imagen1](https://user-images.githubusercontent.com/53972469/73682120-b4732700-468d-11ea-938a-521b80523013.png) 
 6. Identify possible critical regions in regards to the fight of the immortals. Implement a blocking strategy that avoids race              conditions. Remember that if you need to use two or more ‘locks’ simultaneously, you can use nested synchronized blocks:
     
     The fight is the most important critical region, becuase all threads access to the variable that is the health of every mortal.
