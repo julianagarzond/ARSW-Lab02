@@ -3,12 +3,15 @@ package edu.eci.arsw.highlandersim;
 import java.util.Random;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Immortal extends Thread {
 
     private ImmortalUpdateReportCallback updateCallback = null;
 
     private int health;
+
+    private AtomicBoolean isPaused;
 
     private int defaultDamageValue;
 
@@ -26,13 +29,23 @@ public class Immortal extends Thread {
         this.immortalsPopulation = immortalsPopulation;
         this.health = health;
         this.defaultDamageValue = defaultDamageValue;
+        isPaused = new AtomicBoolean(false);
     }
 
     public void run() {
 
         while (true) {
-            Immortal im;
+            synchronized (isPaused){
+                while (isPaused.get()){
+                    try{
+                        isPaused.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            Immortal im;
 
             int myIndex = immortalsPopulation.indexOf(this);
 
@@ -48,6 +61,7 @@ public class Immortal extends Thread {
             synchronized (immortalsPopulation) {
                 this.fight(im);
             }
+
 
 
             try {
@@ -83,6 +97,16 @@ public class Immortal extends Thread {
 
     public int getHealth() {
         return health;
+    }
+
+    public void pause(){
+        isPaused.set(!isPaused.get());
+    }
+
+    public void wake(){
+        synchronized (isPaused) {
+            isPaused.notify();
+        }
     }
 
     @Override

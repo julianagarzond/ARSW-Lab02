@@ -22,6 +22,7 @@ import java.awt.Color;
 import javax.swing.JScrollBar;
 
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ControlFrame extends JFrame {
 
@@ -106,8 +107,9 @@ public class ControlFrame extends JFrame {
 
         btnResume.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                synchronized (this) {
-                    notifyAll();
+                for (Immortal i : immortals){
+                    i.pause();
+                    i.wake();
                 }
             }
         });
@@ -125,6 +127,14 @@ public class ControlFrame extends JFrame {
         JButton btnStop = new JButton("STOP");
         btnStop.setForeground(Color.RED);
         toolBar.add(btnStop);
+
+        btnStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Immortal i : immortals){
+                    i.pause();
+                }
+            }
+        });
 
         scrollPane = new JScrollPane();
         contentPane.add(scrollPane, BorderLayout.CENTER);
