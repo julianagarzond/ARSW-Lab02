@@ -8,7 +8,7 @@
   - mvn pacakage
   
 ## Run
-  - mvn compile0
+  - mvn compile
 
 ## Immortal Case
 The purpose of this laboratory is for the student to know and apply concepts of concurrent programming, as well as strategies that avoid career conditions
@@ -146,28 +146,87 @@ Synchronization and Dead-Locks.
     
 4. A first hypothesis that the race condition for this function (pause and check) is presented is that the program consults the list        whose values ​​it will print, while other threads modify their values. To correct this, do whatever is necessary so that, before        printing the current results, all other threads are paused. Additionally, implement the ‘resume’ option.
     For the "pause and check" option we synchronized the "Inmortal population" List
-   
     
+    ``` java
+       synchronized (immortalsPopulation) {
+                this.fight(im);
+            }
+            
+     ´´´
+        
 5. Check the operation again (click the button many times). Is the invariant fulfilled or not ?.
     The invariant is fulfilled, everytime we click the button the value is 300 with N=0.
     ![Imagen1](https://user-images.githubusercontent.com/53972469/73682120-b4732700-468d-11ea-938a-521b80523013.png) 
+    
+    ![pic](https://user-images.githubusercontent.com/43153078/73904147-25bb0180-4869-11ea-911c-7a231ff85c53.png)
+    
+    ![pica](https://user-images.githubusercontent.com/43153078/73904174-353a4a80-4869-11ea-8d21-606c40744dcd.png)
+    
+    
 6. Identify possible critical regions in regards to the fight of the immortals. Implement a blocking strategy that avoids race              conditions. Remember that if you need to use two or more ‘locks’ simultaneously, you can use nested synchronized blocks:
     
     The fight is the most important critical region, becuase all threads access to the variable that is the health of every mortal.
    
 7. After implementing your strategy, start running your program, and pay attention to whether it comes to a halt. If so, use the jps and    jstack programs to identify why the program stopped.
 
-After running the problem there is not any halt.
+    After running the problem there is not any halt.
 
 8. Consider a strategy to correct the problem identified above (you can review Chapter 15 of Java Concurrency in Practice again).
 
 9. Once the problem is corrected, rectify that the program continues to function consistently when 100, 1000 or 10000 immortals are        executed. If in these large cases the invariant begins to be breached again, you must analyze what was done in step 4.
+  
+  The program is still working 
 
 10. An annoying element for the simulation is that at a certain point in it there are few living 'immortals' making failed fights with     'immortals' already dead. It is necessary to suppress the immortal dead of the simulation as they die.
+    To fix this problem we use a CopyOnWriteArrayList which works with collection and concurrency
+    And we modify the method "Change Health", where we remove the immortals that are dead
+    
+     ``` java 
+    public void changeHealth(int v) {
+        if(this.health > 0) {
+            health = v;
+        }else{
+            health = v;
+            immortalsPopulation.remove(this);
+        }
+    }
+    
+    ´´´
 
   10.1 Analyzing the simulation operation scheme, could this create a race condition? Implement the functionality, run the simulation          and see what problem arises when there are many 'immortals' in it. Write your conclusions about it in the file ANSWERS.txt.
+  Wiothout synchronization there could be a race condition because multiple threats have access to the same space in memory  
 
   10.2 Correct the previous problem WITHOUT using synchronization, since making access to the shared list of immortals sequential would       .make simulation extremely slow.
 
-13. To finish, implement the STOP option.
+11. To finish, implement the STOP option.
+
+    To Stop the program we implement de Pause method with an Atomic boolean
+
+     ``` java
+      private AtomicBoolean isPaused;
+      
+      // Pause method
+       public void pause(){
+        isPaused.set(!isPaused.get());
+    }
+      
+      
+      JButton btnStop = new JButton("STOP");
+        btnStop.setForeground(Color.RED);
+        toolBar.add(btnStop);
+
+        btnStop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                for (Immortal i : immortals){
+                    i.pause();
+                }
+            }
+        });
+        
+        
+        
+       
+        
+        ´´´´
+
 
